@@ -64,9 +64,14 @@ export default function Login() {
             Use sua conta corporativa para acessar
           </p>
 
-          {error && (
+          {error === 'auth_failed' && (
             <div className="mb-4 px-4 py-3 rounded-lg bg-critical/10 border border-critical/20 text-critical text-sm text-center">
               Autenticação falhou. Tente novamente.
+            </div>
+          )}
+          {error === 'no_token' && (
+            <div className="mb-4 px-4 py-3 rounded-lg bg-warn/10 border border-warn/20 text-warn text-sm text-center">
+              Token não encontrado. Tente fazer login novamente.
             </div>
           )}
 

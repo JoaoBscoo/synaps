@@ -15,17 +15,18 @@ export default function AuthCallback() {
 
     localStorage.setItem('synaps_token', token);
 
-    // Buscar dados do usuário para saber para qual workspace redirecionar
     authApi.me()
       .then((user) => {
         const firstSlug = user?.tenants?.[0]?.tenant?.slug;
         if (firstSlug) {
           navigate(`/w/${firstSlug}/dashboard`, { replace: true });
         } else {
-          navigate('/login?error=no_workspace');
+          // Usuário novo sem workspace — redireciona para criação
+          navigate('/workspace/new', { replace: true });
         }
       })
       .catch(() => {
+        localStorage.removeItem('synaps_token');
         navigate('/login?error=auth_failed');
       });
   }, []);

@@ -9,6 +9,7 @@ import { User } from './types';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import AuthCallback from './pages/AuthCallback';
+import WorkspaceCreate from './pages/WorkspaceCreate';
 import Invite from './pages/Invite';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
@@ -77,6 +78,7 @@ export default function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/workspace/new" element={<RequireAuth><WorkspaceCreate /></RequireAuth>} />
           <Route path="/invite/:token" element={<Invite />} />
 
           {/* Autenticadas */}
