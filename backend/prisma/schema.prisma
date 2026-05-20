@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id        String       @id @default(cuid())
+  name      String
+  slug      String       @unique
+  logoUrl   String?
+  createdAt DateTime     @default(now())
+  users     TenantUser[]
+  projects  Project[]
+  invites   Invite[]
+}
+
+model User {
+  id        String       @id @default(cuid())
+  email     String       @unique
+  name      String
+  avatarUrl String?
+  provider  String
+  createdAt DateTime     @default(now())
+  tenants   TenantUser[]
+}
+
+model TenantUser {
+  id       String @id @default(cuid())
+  role     Role   @default(VIEWER)
+  userId   String
+  tenantId String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tenantId])
+}
+
+enum Role {
+  OWNER
+  EDITOR
+  VIEWER
+  CLIENT
+}
+
+model Project {
+  id          String     @id @default(cuid())
+  tenantId    String
+  name        String
+  code        String
+  description String?
+  status      Status     @default(ON_TRACK)
+  progress    Int        @default(0)
+  healthScore Int        @default(100)
+  deadline    DateTime?
+  budgetTotal Float?
+  budgetUsed  Float?
+  responsible String?
+  category    String?
+  clientName  String?
+  clientEmail String?
+  tags        String[]
+  priority    Priority   @default(MEDIUM)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tasks       Task[]
+  logs        AuditLog[]
+
+  @@unique([tenantId, code])
+}
+
+enum Status {
+  ON_TRACK
+  AT_RISK
+  DELAYED
+  COMPLETED
+  PAUSED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model Task {
+  id        String    @id @default(cuid())
+  projectId String
+  title     String
+  done      Boolean   @default(false)
+  dueDate   DateTime?
+  assignee  String?
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  projectId String
+  userId    String
+  action    String
+  oldValue  String?
+  newValue  String?
+  createdAt DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Invite {
+  id        String    @id @default(cuid())
+  tenantId  String
+  email     String
+  role      Role
+  token     String    @unique @default(cuid())
+  expiresAt DateTime
+  usedAt    DateTime?
+  tenant    Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+}

@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #07090f;
+    --surface: #0f1520;
+    --border: rgba(99, 179, 237, 0.12);
+    --synapse: #63b3ed;
+    --pulse: #9f7aea;
+    --healthy: #48bb78;
+    --warn: #ed8936;
+    --critical: #fc8181;
+    --text: #e2e8f0;
+    --muted: #4a5568;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--surface);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(99, 179, 237, 0.3);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 179, 237, 0.5);
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface rounded-xl border border-border p-5;
+  }
+
+  .btn-primary {
+    @apply bg-synapse-gradient text-white font-semibold px-5 py-2.5 rounded-lg
+           hover:opacity-90 transition-all duration-200 active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-[--text] border border-border px-4 py-2 rounded-lg
+           hover:border-synapse/40 hover:bg-synapse/5 transition-all duration-200;
+  }
+
+  .input {
+    @apply w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-[--text]
+           placeholder:text-muted focus:outline-none focus:border-synapse/50
+           focus:ring-1 focus:ring-synapse/20 transition-all duration-200;
+  }
+
+  .select {
+    @apply w-full bg-bg border border-border rounded-lg px-4 py-2.5 text-[--text]
+           focus:outline-none focus:border-synapse/50 focus:ring-1 focus:ring-synapse/20
+           transition-all duration-200;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-[--muted] mb-1.5;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted
+           hover:text-[--text] hover:bg-synapse/8 transition-all duration-200;
+  }
+
+  .nav-link.active {
+    @apply text-synapse bg-synapse/10;
+  }
+}
+
+/* Animação do fundo sináptico */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes synapseGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+.synapse-node {
+  animation: synapseGlow 3s ease-in-out infinite;
+}
+
+.bg-synapse-gradient {
+  background: linear-gradient(135deg, #63b3ed, #9f7aea);
+}

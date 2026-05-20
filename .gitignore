@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Environment files — NUNCA subir para o git
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env.local
+
+# Prisma
+prisma/.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Google OAuth credentials (SENSÍVEL!)
+client_secret_*.json
+
+# Vercel
+.vercel/
+
+# Railway
+.railway/

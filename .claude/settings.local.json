@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Recurse \"c:\\\\Users\\\\joao.bosco\\\\Documents\\\\ProjetoSynaps\" | Where-Object { !$_.PSIsContainer } | Select-Object -ExpandProperty FullName | Sort-Object)"
+    ]
+  }
+}
