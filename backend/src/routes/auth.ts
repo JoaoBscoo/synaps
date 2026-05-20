@@ -25,18 +25,17 @@ router.get(
   }
 );
 
-// Microsoft OAuth
-router.get('/microsoft', passport.authenticate('microsoft', { session: false } as object));
-
-router.get(
-  '/microsoft/callback',
-  passport.authenticate('microsoft', { session: false, failureRedirect: `${FRONTEND_URL}/login?error=auth_failed` } as object),
-  (req: Request, res: Response) => {
-    const user = req.user as { id: string };
-    const token = generateToken(user.id);
-    res.redirect(`${FRONTEND_URL}/auth/callback?token=${token}`);
-  }
-);
+// Microsoft OAuth desativado temporariamente
+// router.get('/microsoft', passport.authenticate('microsoft', { session: false } as object));
+// router.get(
+//   '/microsoft/callback',
+//   passport.authenticate('microsoft', { session: false, failureRedirect: `${FRONTEND_URL}/login?error=auth_failed` } as object),
+//   (req: Request, res: Response) => {
+//     const user = req.user as { id: string };
+//     const token = generateToken(user.id);
+//     res.redirect(`${FRONTEND_URL}/auth/callback?token=${token}`);
+//   }
+// );
 
 // GET /auth/me
 router.get('/me', authenticate, async (req: AuthRequest, res: Response) => {
