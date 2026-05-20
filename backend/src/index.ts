@@ -16,6 +16,8 @@ import dashboardRoutes from './routes/dashboard';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+app.set('trust proxy', 1);
+
 // Segurança
 app.use(helmet());
 app.use(
