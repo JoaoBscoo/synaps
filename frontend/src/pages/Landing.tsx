@@ -66,6 +66,8 @@ export default function Landing() {
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6">
             Gerencie projetos
             <br />
+            com o João Bosco
+            <br />
             <span
               style={{
                 backgroundImage: 'linear-gradient(135deg, #63b3ed, #9f7aea)',
